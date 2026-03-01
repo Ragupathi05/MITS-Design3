@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Menu, X, Search, ChevronDown } from "lucide-react";
+import { Menu, X, Search } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -12,6 +12,7 @@ const navItems = [
   { label: "Research", href: "/research" },
   { label: "Placements", href: "/placements" },
   { label: "Campus Life", href: "/campus-life" },
+  { label: "News & Events", href: "/news-events" },
   { label: "Contact", href: "/contact" },
 ];
 
@@ -44,19 +45,13 @@ const Header = () => {
         <div className="container mx-auto flex items-center justify-between py-1.5 px-4">
           <div className="flex items-center gap-4">
             {utilityLinks.map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
-                className="text-gold-light/80 hover:text-gold transition-colors text-xs tracking-wide"
-              >
+              <a key={link.label} href={link.href} className="text-gold-light/80 hover:text-gold transition-colors text-xs tracking-wide">
                 {link.label}
               </a>
             ))}
           </div>
           <div className="flex items-center gap-3">
-            <a href="mailto:info@mits.ac.in" className="text-gold-light/80 hover:text-gold transition-colors text-xs">
-              info@mits.ac.in
-            </a>
+            <a href="mailto:info@mits.ac.in" className="text-gold-light/80 hover:text-gold transition-colors text-xs">info@mits.ac.in</a>
           </div>
         </div>
       </div>
@@ -64,37 +59,34 @@ const Header = () => {
       {/* Main Nav */}
       <header
         className={`sticky top-0 z-50 transition-all duration-300 ${
-          isScrolled
-            ? "bg-navy/95 backdrop-blur-md shadow-lg"
-            : "bg-navy"
+          isScrolled ? "bg-navy/95 backdrop-blur-md shadow-lg" : "bg-navy"
         }`}
       >
         <div className="container mx-auto flex items-center justify-between py-3 px-4">
-          {/* Logo */}
-          <Link to="/" className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-gold flex items-center justify-center font-heading font-bold text-accent-foreground text-lg">
+          {/* Logo — larger and more prominent */}
+          <Link to="/" className="flex items-center gap-3 shrink-0">
+            <div className="w-12 h-12 rounded-full bg-gold flex items-center justify-center font-heading font-bold text-accent-foreground text-xl">
               M
             </div>
-            <div className="hidden sm:block">
-              <h1 className="text-gold font-heading text-lg font-bold leading-tight">MITS</h1>
-              <p className="text-gold-light/70 text-[10px] tracking-wider uppercase">
+            <div>
+              <h1 className="text-gold font-heading text-xl md:text-2xl font-bold leading-tight tracking-wide">MITS</h1>
+              <p className="text-gold-light/80 text-[11px] md:text-xs tracking-wider uppercase leading-tight">
                 Madanapalle Institute of Technology & Science
               </p>
             </div>
           </Link>
 
           {/* Desktop Nav */}
-          <nav className="hidden lg:flex items-center gap-1">
+          <nav className="hidden xl:flex items-center gap-0.5">
             {navItems.map((item) => (
               <Link
                 key={item.label}
                 to={item.href}
-                className={`px-3 py-2 text-sm font-medium transition-colors rounded-md ${
+                className={`px-2.5 py-2 text-[13px] font-medium transition-colors rounded-md whitespace-nowrap ${
                   location.pathname === item.href
                     ? "text-gold"
-                    : "text-muted-foreground/90 hover:text-gold"
+                    : "text-gold-light/70 hover:text-gold"
                 }`}
-                style={{ color: location.pathname === item.href ? undefined : "hsl(210 20% 80%)" }}
               >
                 {item.label}
               </Link>
@@ -102,7 +94,7 @@ const Header = () => {
           </nav>
 
           {/* Actions */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 shrink-0">
             <button className="text-gold-light/70 hover:text-gold transition-colors hidden lg:block">
               <Search className="w-4 h-4" />
             </button>
@@ -112,10 +104,7 @@ const Header = () => {
             >
               Apply Now
             </Link>
-            <button
-              className="lg:hidden text-gold"
-              onClick={() => setMobileOpen(!mobileOpen)}
-            >
+            <button className="xl:hidden text-gold" onClick={() => setMobileOpen(!mobileOpen)}>
               {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
           </div>
@@ -128,14 +117,18 @@ const Header = () => {
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: "auto", opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
-              className="lg:hidden bg-navy-light overflow-hidden"
+              className="xl:hidden bg-navy-light overflow-hidden"
             >
               <nav className="flex flex-col px-4 py-4 gap-1">
                 {navItems.map((item) => (
                   <Link
                     key={item.label}
                     to={item.href}
-                    className="py-2.5 px-3 text-sm rounded-md text-gold-light/80 hover:text-gold hover:bg-navy transition-colors"
+                    className={`py-2.5 px-3 text-sm rounded-md transition-colors ${
+                      location.pathname === item.href
+                        ? "text-gold bg-navy"
+                        : "text-gold-light/80 hover:text-gold hover:bg-navy"
+                    }`}
                   >
                     {item.label}
                   </Link>

@@ -1,7 +1,7 @@
 import Layout from "@/components/Layout";
 import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
-import { TrendingUp, Users, Award, Building, Briefcase, BarChart3, ArrowRight } from "lucide-react";
+import { TrendingUp, Users, Award, Building, Briefcase, BarChart3 } from "lucide-react";
 
 const stats = [
   { icon: TrendingUp, value: 42, suffix: " LPA", label: "Highest Package", decimal: false },
@@ -13,15 +13,26 @@ const stats = [
 ];
 
 const topRecruiters = [
-  { name: "TCS", category: "IT" }, { name: "Infosys", category: "IT" }, { name: "Wipro", category: "IT" },
-  { name: "Cognizant", category: "IT" }, { name: "HCL Technologies", category: "IT" }, { name: "Capgemini", category: "IT" },
-  { name: "Deloitte", category: "Consulting" }, { name: "Accenture", category: "Consulting" },
-  { name: "Amazon", category: "Product" }, { name: "Microsoft", category: "Product" },
-  { name: "Google", category: "Product" }, { name: "IBM", category: "IT" },
-  { name: "L&T", category: "Core" }, { name: "Bosch", category: "Core" },
-  { name: "Schneider Electric", category: "Core" }, { name: "Mahindra", category: "Core" },
-  { name: "Zoho", category: "Product" }, { name: "Freshworks", category: "Product" },
-  { name: "JP Morgan", category: "Finance" }, { name: "Goldman Sachs", category: "Finance" },
+  { name: "TCS", category: "IT", color: "#1A1A6C" },
+  { name: "Infosys", category: "IT", color: "#007CC3" },
+  { name: "Wipro", category: "IT", color: "#3D1A78" },
+  { name: "Cognizant", category: "IT", color: "#1A4F8B" },
+  { name: "HCL Technologies", category: "IT", color: "#0073B1" },
+  { name: "Capgemini", category: "IT", color: "#0070AD" },
+  { name: "Deloitte", category: "Consulting", color: "#86BC25" },
+  { name: "Accenture", category: "Consulting", color: "#A100FF" },
+  { name: "Amazon", category: "Product", color: "#FF9900" },
+  { name: "Microsoft", category: "Product", color: "#00A4EF" },
+  { name: "Google", category: "Product", color: "#4285F4" },
+  { name: "IBM", category: "IT", color: "#054ADA" },
+  { name: "L&T", category: "Core", color: "#003366" },
+  { name: "Bosch", category: "Core", color: "#E20015" },
+  { name: "Schneider Electric", category: "Core", color: "#3DCD58" },
+  { name: "Mahindra", category: "Core", color: "#E32726" },
+  { name: "Zoho", category: "Product", color: "#D72B2B" },
+  { name: "Freshworks", category: "Product", color: "#F36F21" },
+  { name: "JP Morgan", category: "Finance", color: "#003A70" },
+  { name: "Goldman Sachs", category: "Finance", color: "#6F9FD8" },
 ];
 
 const deptPlacements = [
@@ -75,7 +86,7 @@ const Placements = () => {
               Placement <span className="text-gradient-gold">Excellence</span>
             </h1>
             <p className="text-gold-light/70 text-lg">
-              Our dedicated placement cell ensures every student gets the best career opportunities 
+              Our dedicated placement cell ensures every student gets the best career opportunities
               with top companies across India and abroad.
             </p>
           </motion.div>
@@ -159,10 +170,18 @@ const Placements = () => {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.03 }}
-                className="px-5 py-3 bg-surface rounded-lg shadow-sm border border-border hover:border-gold hover:shadow-md transition-all"
+                className="flex items-center gap-3 px-5 py-3 bg-surface rounded-xl shadow-sm border border-border hover:border-gold hover:shadow-md transition-all min-w-[160px]"
               >
-                <span className="text-sm font-medium text-foreground">{r.name}</span>
-                <span className="text-[10px] text-muted-foreground ml-2 bg-cream px-2 py-0.5 rounded-full">{r.category}</span>
+                <div
+                  className="w-8 h-8 rounded-lg flex items-center justify-center text-surface font-heading font-bold text-xs shrink-0"
+                  style={{ backgroundColor: r.color }}
+                >
+                  {r.name.charAt(0)}
+                </div>
+                <div>
+                  <span className="text-sm font-semibold text-foreground block leading-tight">{r.name}</span>
+                  <span className="text-[10px] text-muted-foreground">{r.category}</span>
+                </div>
               </motion.div>
             ))}
           </div>
