@@ -10,8 +10,18 @@ const placementStats = [
 ];
 
 const recruiters = [
-  "TCS", "Infosys", "Wipro", "Cognizant", "HCL", "Capgemini",
-  "Deloitte", "Accenture", "Amazon", "Microsoft", "Google", "IBM",
+  { name: "TCS", color: "#1A1A6C" },
+  { name: "Infosys", color: "#007CC3" },
+  { name: "Wipro", color: "#3D1A78" },
+  { name: "Cognizant", color: "#1A4F8B" },
+  { name: "HCL", color: "#0073B1" },
+  { name: "Capgemini", color: "#0070AD" },
+  { name: "Deloitte", color: "#86BC25" },
+  { name: "Accenture", color: "#A100FF" },
+  { name: "Amazon", color: "#FF9900" },
+  { name: "Microsoft", color: "#00A4EF" },
+  { name: "Google", color: "#4285F4" },
+  { name: "IBM", color: "#054ADA" },
 ];
 
 function CountUpNumber({ target, suffix, start, decimal }: { target: number; suffix: string; start: boolean; decimal?: boolean }) {
@@ -74,12 +84,18 @@ const PlacementsSection = () => {
         <div className="bg-surface rounded-xl p-8 shadow-sm">
           <h3 className="font-heading font-semibold text-lg text-foreground text-center mb-6">Top Recruiters</h3>
           <div className="flex flex-wrap justify-center gap-4">
-            {recruiters.map((name) => (
+            {recruiters.map((r) => (
               <div
-                key={name}
-                className="px-6 py-3 bg-cream rounded-lg text-sm font-medium text-navy border border-border hover:border-gold hover:shadow-sm transition-all"
+                key={r.name}
+                className="group relative px-6 py-4 bg-cream rounded-xl border border-border hover:shadow-md transition-all flex items-center gap-3 min-w-[140px] justify-center"
               >
-                {name}
+                <div
+                  className="w-9 h-9 rounded-lg flex items-center justify-center text-surface font-heading font-bold text-sm shrink-0"
+                  style={{ backgroundColor: r.color }}
+                >
+                  {r.name.charAt(0)}
+                </div>
+                <span className="text-sm font-semibold text-navy">{r.name}</span>
               </div>
             ))}
           </div>

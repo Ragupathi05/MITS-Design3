@@ -3,6 +3,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { ScrollToTop } from "./components/ScrollToTop";
 import Index from "./pages/Index";
 import About from "./pages/About";
 import Academics from "./pages/Academics";
@@ -13,6 +14,8 @@ import CampusLife from "./pages/CampusLife";
 import Contact from "./pages/Contact";
 import Departments from "./pages/Departments";
 import DepartmentDetail from "./pages/DepartmentDetail";
+import NewsEvents from "./pages/NewsEvents";
+import EventDetail from "./pages/EventDetail";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -23,6 +26,7 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
+        <ScrollToTop />
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/about" element={<About />} />
@@ -34,6 +38,8 @@ const App = () => (
           <Route path="/contact" element={<Contact />} />
           <Route path="/departments" element={<Departments />} />
           <Route path="/departments/:slug" element={<DepartmentDetail />} />
+          <Route path="/news-events" element={<NewsEvents />} />
+          <Route path="/news-events/:id" element={<EventDetail />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
