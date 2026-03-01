@@ -77,12 +77,12 @@ const Header = () => {
           </Link>
 
           {/* Desktop Nav */}
-          <nav className="hidden xl:flex items-center gap-0.5">
+          <nav className="hidden lg:flex items-center gap-0">
             {navItems.map((item) => (
               <Link
                 key={item.label}
                 to={item.href}
-                className={`px-2.5 py-2 text-[13px] font-medium transition-colors rounded-md whitespace-nowrap ${
+                className={`px-2 py-2 text-[12px] font-medium transition-colors rounded-md whitespace-nowrap ${
                   location.pathname === item.href
                     ? "text-gold"
                     : "text-gold-light/70 hover:text-gold"
@@ -104,7 +104,7 @@ const Header = () => {
             >
               Apply Now
             </Link>
-            <button className="xl:hidden text-gold" onClick={() => setMobileOpen(!mobileOpen)}>
+            <button className="lg:hidden text-gold" onClick={() => setMobileOpen(!mobileOpen)}>
               {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
           </div>
@@ -117,7 +117,7 @@ const Header = () => {
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: "auto", opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
-              className="xl:hidden bg-navy-light overflow-hidden"
+              className="lg:hidden bg-navy-light overflow-hidden"
             >
               <nav className="flex flex-col px-4 py-4 gap-1">
                 {navItems.map((item) => (
