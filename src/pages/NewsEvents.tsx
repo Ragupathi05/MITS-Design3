@@ -3,32 +3,21 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import { Calendar, MapPin, Clock, ArrowRight, Search } from "lucide-react";
 import { Link } from "react-router-dom";
+import { newsEvents } from "@/data/newsEvents";
 
-const allEvents = [
-  { id: "national-tech-symposium-2026", title: "National Technical Symposium 2026", date: "March 15, 2026", time: "9:00 AM", category: "Event", location: "Main Auditorium", desc: "Annual tech fest featuring workshops, hackathons, and expert talks from industry leaders.", featured: true },
-  { id: "ai-ml-conference-2026", title: "International Conference on AI & ML", date: "April 5, 2026", time: "10:00 AM", category: "Conference", location: "Seminar Hall A", desc: "Global researchers present cutting-edge AI and ML research papers and findings.", featured: true },
-  { id: "alumni-meet-2026", title: "Alumni Meet 2026", date: "February 28, 2026", time: "5:00 PM", category: "Alumni", location: "Convention Center", desc: "Annual gathering of MITS alumni for networking, mentorship, and celebrations." },
-  { id: "industry-connect-2026", title: "Industry Connect Program", date: "March 20, 2026", time: "11:00 AM", category: "Industry", location: "Block A Auditorium", desc: "Top companies share insights on industry trends and career opportunities." },
-  { id: "resonance-2026", title: "Cultural Fest - Resonance", date: "April 12, 2026", time: "4:00 PM", category: "Cultural", location: "Open Air Theatre", desc: "A vibrant celebration of art, music, dance, and creativity across three days." },
-  { id: "research-paper-awards-2026", title: "Research Paper Awards", date: "May 1, 2026", time: "2:00 PM", category: "Research", location: "R&D Block", desc: "Recognizing outstanding research contributions by faculty and students." },
-  { id: "placement-drive-spring-2026", title: "Spring Placement Drive 2026", date: "March 25, 2026", time: "9:00 AM", category: "Placements", location: "Placement Cell", desc: "Major recruitment drive with 50+ companies visiting the campus." },
-  { id: "sports-fest-2026", title: "Annual Sports Meet - Athlos", date: "April 20, 2026", time: "7:00 AM", category: "Cultural", location: "Sports Complex", desc: "Inter-department sports competition featuring 15+ events." },
-  { id: "guest-lecture-robotics", title: "Guest Lecture on Robotics & IoT", date: "March 10, 2026", time: "3:00 PM", category: "Event", location: "Seminar Hall B", desc: "Expert lecture on emerging trends in robotics and Internet of Things." },
-];
-
-const categories = ["All", "Event", "Conference", "Alumni", "Industry", "Cultural", "Research", "Placements"];
+const categories = ["All", ...Array.from(new Set(newsEvents.map((item) => item.category)))];
 
 const NewsEvents = () => {
   const [activeCategory, setActiveCategory] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
 
-  const filtered = allEvents.filter((e) => {
+  const filtered = newsEvents.filter((e) => {
     const matchesCategory = activeCategory === "All" || e.category === activeCategory;
     const matchesSearch = e.title.toLowerCase().includes(searchQuery.toLowerCase()) || e.desc.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesCategory && matchesSearch;
   });
 
-  const featured = allEvents.filter((e) => e.featured);
+  const featured = newsEvents.filter((e) => e.featured);
 
   return (
     <Layout>
@@ -60,13 +49,18 @@ const NewsEvents = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.1 }}
-                className="bg-surface rounded-xl overflow-hidden shadow-md border border-border hover:shadow-lg transition-all"
+                className="bg-surface rounded-xl overflow-hidden shadow-md border border-border hover:shadow-lg transition-all duration-300 group"
               >
-                <div className="gradient-navy p-6">
-                  <span className="text-xs font-semibold text-navy bg-gold px-3 py-1 rounded-full">{event.category}</span>
-                  <h3 className="font-heading font-bold text-xl text-surface mt-4">{event.title}</h3>
+                <div className="overflow-hidden">
+                  <img
+                    src={`${import.meta.env.BASE_URL}${event.image}`}
+                    alt={event.title}
+                    className="w-full h-auto object-contain object-center transition-transform duration-500 group-hover:scale-105"
+                  />
                 </div>
                 <div className="p-6">
+                  <span className="text-xs font-semibold text-royal bg-royal/10 px-3 py-1 rounded-full">{event.category}</span>
+                  <h3 className="font-heading font-bold text-xl text-foreground mt-4 mb-3 group-hover:text-royal transition-colors">{event.title}</h3>
                   <p className="text-sm text-muted-foreground mb-4">{event.desc}</p>
                   <div className="flex flex-wrap gap-4 text-xs text-muted-foreground mb-4">
                     <span className="flex items-center gap-1"><Calendar className="w-3.5 h-3.5" /> {event.date}</span>
@@ -132,18 +126,27 @@ const NewsEvents = () => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: i * 0.05 }}
-                  className="bg-surface rounded-xl p-6 shadow-sm border border-border hover:shadow-md hover:border-gold/30 transition-all group"
+                  className="bg-surface rounded-xl overflow-hidden shadow-sm border border-border hover:shadow-md hover:border-gold/30 transition-all duration-300 group"
                 >
-                  <span className="text-xs font-semibold text-royal bg-royal/10 px-3 py-1 rounded-full">{event.category}</span>
-                  <h3 className="font-heading font-semibold text-lg text-foreground mt-4 mb-2 group-hover:text-royal transition-colors">{event.title}</h3>
-                  <p className="text-sm text-muted-foreground mb-4 leading-relaxed line-clamp-2">{event.desc}</p>
-                  <div className="flex flex-wrap gap-3 text-xs text-muted-foreground mb-4">
-                    <span className="flex items-center gap-1"><Calendar className="w-3 h-3" /> {event.date}</span>
-                    <span className="flex items-center gap-1"><MapPin className="w-3 h-3" /> {event.location}</span>
+                  <div className="overflow-hidden">
+                    <img
+                      src={`${import.meta.env.BASE_URL}${event.image}`}
+                      alt={event.title}
+                      className="w-full h-auto object-contain object-center transition-transform duration-500 group-hover:scale-105"
+                    />
                   </div>
-                  <Link to={`/news-events/${event.id}`} className="text-sm font-semibold text-royal hover:text-royal-light inline-flex items-center gap-1 transition-colors">
-                    Learn More <ArrowRight className="w-3.5 h-3.5" />
-                  </Link>
+                  <div className="p-6">
+                    <span className="text-xs font-semibold text-royal bg-royal/10 px-3 py-1 rounded-full">{event.category}</span>
+                    <h3 className="font-heading font-semibold text-lg text-foreground mt-4 mb-2 group-hover:text-royal transition-colors">{event.title}</h3>
+                    <p className="text-sm text-muted-foreground mb-4 leading-relaxed line-clamp-2">{event.desc}</p>
+                    <div className="flex flex-wrap gap-3 text-xs text-muted-foreground mb-4">
+                      <span className="flex items-center gap-1"><Calendar className="w-3 h-3" /> {event.date}</span>
+                      <span className="flex items-center gap-1"><MapPin className="w-3 h-3" /> {event.location}</span>
+                    </div>
+                    <Link to={`/news-events/${event.id}`} className="text-sm font-semibold text-royal hover:text-royal-light inline-flex items-center gap-1 transition-colors">
+                      Learn More <ArrowRight className="w-3.5 h-3.5" />
+                    </Link>
+                  </div>
                 </motion.div>
               ))}
             </motion.div>
