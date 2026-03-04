@@ -1,21 +1,14 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { Calendar, ChevronLeft, ChevronRight } from "lucide-react";
-
-const events = [
-  { title: "National Technical Symposium 2026", date: "March 15, 2026", category: "Event", desc: "Annual tech fest featuring workshops, hackathons, and expert talks." },
-  { title: "International Conference on AI & ML", date: "April 5, 2026", category: "Conference", desc: "Global researchers present cutting-edge AI and ML research." },
-  { title: "Alumni Meet 2026", date: "February 28, 2026", category: "Alumni", desc: "Annual gathering of MITS alumni for networking and mentorship." },
-  { title: "Industry Connect Program", date: "March 20, 2026", category: "Industry", desc: "Top companies share insights on industry trends and opportunities." },
-  { title: "Cultural Fest - Resonance", date: "April 12, 2026", category: "Cultural", desc: "A vibrant celebration of art, music, dance, and creativity." },
-  { title: "Research Paper Awards", date: "May 1, 2026", category: "Research", desc: "Recognizing outstanding research contributions by faculty and students." },
-];
+import { Link } from "react-router-dom";
+import { newsEvents } from "@/data/newsEvents";
 
 const NewsSection = () => {
   const [page, setPage] = useState(0);
   const perPage = 3;
-  const totalPages = Math.ceil(events.length / perPage);
-  const visible = events.slice(page * perPage, (page + 1) * perPage);
+  const totalPages = Math.ceil(newsEvents.length / perPage);
+  const visible = newsEvents.slice(page * perPage, (page + 1) * perPage);
 
   return (
     <section className="py-20 bg-cream">
@@ -48,12 +41,20 @@ const NewsSection = () => {
         <div className="grid md:grid-cols-3 gap-6">
           {visible.map((event, i) => (
             <motion.div
-              key={event.title}
+              key={event.id}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.1 }}
-              className="bg-surface rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all group"
+              className="bg-surface rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 group"
             >
+              <Link to={`/news-events/${event.id}`} className="block">
+                <div className="overflow-hidden">
+                  <img
+                    src={`${import.meta.env.BASE_URL}${event.image}`}
+                    alt={event.title}
+                    className="w-full h-auto object-contain object-center transition-transform duration-500 group-hover:scale-105"
+                  />
+                </div>
               <div className="p-6">
                 <span className="text-xs font-semibold text-royal bg-royal/10 px-3 py-1 rounded-full">
                   {event.category}
@@ -67,6 +68,7 @@ const NewsSection = () => {
                   {event.date}
                 </div>
               </div>
+              </Link>
             </motion.div>
           ))}
         </div>

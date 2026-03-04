@@ -5,9 +5,9 @@
   "type": "module",
   "homepage": "https://ragupathi05.github.io/MITS-Design3",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "build:dev": "vite build --mode development",
+    "dev": "node init && vite",
+    "build": "node init && vite build",
+    "build:dev": "node init && vite build --mode development",
     "lint": "eslint .",
     "preview": "vite preview",
     "predeploy": "npm run build",

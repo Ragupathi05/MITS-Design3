@@ -10,18 +10,18 @@ const placementStats = [
 ];
 
 const recruiters = [
-  { name: "TCS", color: "#1A1A6C" },
-  { name: "Infosys", color: "#007CC3" },
-  { name: "Wipro", color: "#3D1A78" },
-  { name: "Cognizant", color: "#1A4F8B" },
-  { name: "HCL", color: "#0073B1" },
-  { name: "Capgemini", color: "#0070AD" },
-  { name: "Deloitte", color: "#86BC25" },
-  { name: "Accenture", color: "#A100FF" },
-  { name: "Amazon", color: "#FF9900" },
-  { name: "Microsoft", color: "#00A4EF" },
-  { name: "Google", color: "#4285F4" },
-  { name: "IBM", color: "#054ADA" },
+  { name: "TCS", logo: `${import.meta.env.BASE_URL}recruiters/tcs.png` },
+  { name: "Infosys", logo: `${import.meta.env.BASE_URL}recruiters/infosys.png` },
+  { name: "Wipro", logo: `${import.meta.env.BASE_URL}recruiters/wipro.png` },
+  { name: "Cognizant", logo: `${import.meta.env.BASE_URL}recruiters/congnizant.png` },
+  { name: "HCL", logo: `${import.meta.env.BASE_URL}recruiters/hcltech.png` },
+  { name: "Capgemini", logo: `${import.meta.env.BASE_URL}recruiters/capgemini.png` },
+  { name: "Deloitte", logo: `${import.meta.env.BASE_URL}recruiters/Deloitte.png` },
+  { name: "Accenture", logo: `${import.meta.env.BASE_URL}recruiters/accenture.png` },
+  { name: "Amazon", logo: `${import.meta.env.BASE_URL}recruiters/amazon.png` },
+  { name: "Microsoft", logo: `${import.meta.env.BASE_URL}recruiters/microsoft.png` },
+  { name: "Google", logo: `${import.meta.env.BASE_URL}recruiters/google.webp` },
+  { name: "IBM", logo: `${import.meta.env.BASE_URL}recruiters/IBM.png` },
 ];
 
 function CountUpNumber({ target, suffix, start, decimal }: { target: number; suffix: string; start: boolean; decimal?: boolean }) {
@@ -53,6 +53,8 @@ const PlacementsSection = () => {
     return () => observer.disconnect();
   }, []);
 
+  const marqueeRecruiters = [...recruiters, ...recruiters];
+
   return (
     <section ref={ref} className="py-20 bg-cream">
       <div className="container mx-auto px-4">
@@ -83,21 +85,26 @@ const PlacementsSection = () => {
 
         <div className="bg-surface rounded-xl p-8 shadow-sm">
           <h3 className="font-heading font-semibold text-lg text-foreground text-center mb-6">Top Recruiters</h3>
-          <div className="flex flex-wrap justify-center gap-4">
-            {recruiters.map((r) => (
-              <div
-                key={r.name}
-                className="group relative px-6 py-4 bg-cream rounded-xl border border-border hover:shadow-md transition-all flex items-center gap-3 min-w-[140px] justify-center"
-              >
+          <div className="overflow-hidden relative">
+            <motion.div
+              className="flex gap-4 w-max"
+              animate={{ x: ["0%", "-50%"] }}
+              transition={{ duration: 26, ease: "linear", repeat: Infinity }}
+            >
+              {marqueeRecruiters.map((r, index) => (
                 <div
-                  className="w-9 h-9 rounded-lg flex items-center justify-center text-surface font-heading font-bold text-sm shrink-0"
-                  style={{ backgroundColor: r.color }}
+                  key={`${r.name}-${index}`}
+                  className="group px-5 py-4 bg-cream rounded-xl border border-border hover:shadow-md transition-all flex items-center justify-center min-w-[180px] h-[76px]"
                 >
-                  {r.name.charAt(0)}
+                  <img
+                    src={r.logo}
+                    alt={`${r.name} logo`}
+                    className="max-h-10 max-w-[130px] w-auto object-contain transition-all"
+                    loading="lazy"
+                  />
                 </div>
-                <span className="text-sm font-semibold text-navy">{r.name}</span>
-              </div>
-            ))}
+              ))}
+            </motion.div>
           </div>
         </div>
       </div>

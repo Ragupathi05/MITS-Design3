@@ -65,9 +65,7 @@ const Header = () => {
         <div className="container mx-auto flex items-center justify-between py-3 px-4">
           {/* Logo — larger and more prominent */}
           <Link to="/" className="flex items-center gap-3 shrink-0">
-            <div className="w-12 h-12 rounded-full bg-gold flex items-center justify-center font-heading font-bold text-accent-foreground text-xl">
-              M
-            </div>
+            <img src={`${import.meta.env.BASE_URL}mits-logo.png`} alt="MITS Logo" className="w-16 h-16 object-contain object-center" />
             <div>
               <h1 className="text-gold font-heading text-xl md:text-2xl font-bold leading-tight tracking-wide">MITS</h1>
               <p className="text-gold-light/80 text-[11px] md:text-xs tracking-wider uppercase leading-tight">

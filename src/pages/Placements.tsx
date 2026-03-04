@@ -13,26 +13,26 @@ const stats = [
 ];
 
 const topRecruiters = [
-  { name: "TCS", category: "IT", color: "#1A1A6C" },
-  { name: "Infosys", category: "IT", color: "#007CC3" },
-  { name: "Wipro", category: "IT", color: "#3D1A78" },
-  { name: "Cognizant", category: "IT", color: "#1A4F8B" },
-  { name: "HCL Technologies", category: "IT", color: "#0073B1" },
-  { name: "Capgemini", category: "IT", color: "#0070AD" },
-  { name: "Deloitte", category: "Consulting", color: "#86BC25" },
-  { name: "Accenture", category: "Consulting", color: "#A100FF" },
-  { name: "Amazon", category: "Product", color: "#FF9900" },
-  { name: "Microsoft", category: "Product", color: "#00A4EF" },
-  { name: "Google", category: "Product", color: "#4285F4" },
-  { name: "IBM", category: "IT", color: "#054ADA" },
-  { name: "L&T", category: "Core", color: "#003366" },
-  { name: "Bosch", category: "Core", color: "#E20015" },
-  { name: "Schneider Electric", category: "Core", color: "#3DCD58" },
-  { name: "Mahindra", category: "Core", color: "#E32726" },
-  { name: "Zoho", category: "Product", color: "#D72B2B" },
-  { name: "Freshworks", category: "Product", color: "#F36F21" },
-  { name: "JP Morgan", category: "Finance", color: "#003A70" },
-  { name: "Goldman Sachs", category: "Finance", color: "#6F9FD8" },
+  { name: "TCS", category: "IT", logo: `${import.meta.env.BASE_URL}recruiters/tcs.png` },
+  { name: "Infosys", category: "IT", logo: `${import.meta.env.BASE_URL}recruiters/infosys.png` },
+  { name: "Wipro", category: "IT", logo: `${import.meta.env.BASE_URL}recruiters/wipro.png` },
+  { name: "Cognizant", category: "IT", logo: `${import.meta.env.BASE_URL}recruiters/congnizant.png` },
+  { name: "HCL Technologies", category: "IT", logo: `${import.meta.env.BASE_URL}recruiters/hcltech.png` },
+  { name: "Capgemini", category: "IT", logo: `${import.meta.env.BASE_URL}recruiters/capgemini.png` },
+  { name: "Deloitte", category: "Consulting", logo: `${import.meta.env.BASE_URL}recruiters/Deloitte.png` },
+  { name: "Accenture", category: "Consulting", logo: `${import.meta.env.BASE_URL}recruiters/accenture.png` },
+  { name: "Amazon", category: "Product", logo: `${import.meta.env.BASE_URL}recruiters/amazon.png` },
+  { name: "Microsoft", category: "Product", logo: `${import.meta.env.BASE_URL}recruiters/microsoft.png` },
+  { name: "Google", category: "Product", logo: `${import.meta.env.BASE_URL}recruiters/google.webp` },
+  { name: "IBM", category: "IT", logo: `${import.meta.env.BASE_URL}recruiters/IBM.png` },
+  { name: "L&T", category: "Core", logo: `${import.meta.env.BASE_URL}recruiters/L&T.png` },
+  { name: "Bosch", category: "Core", logo: `${import.meta.env.BASE_URL}recruiters/bosch.png` },
+  { name: "Schneider Electric", category: "Core", logo: "https://cdn.simpleicons.org/schneiderelectric" },
+  { name: "Mahindra", category: "Core", logo: `${import.meta.env.BASE_URL}recruiters/mahindra.png` },
+  { name: "Zoho", category: "Product", logo: `${import.meta.env.BASE_URL}recruiters/zoho.png` },
+  { name: "Freshworks", category: "Product", logo: "https://cdn.simpleicons.org/freshworks" },
+  { name: "JP Morgan", category: "Finance", logo: "https://cdn.simpleicons.org/jpmorganchase" },
+  { name: "Goldman Sachs", category: "Finance", logo: "https://cdn.simpleicons.org/goldmansachs" },
 ];
 
 const deptPlacements = [
@@ -72,6 +72,9 @@ const Placements = () => {
     if (ref.current) observer.observe(ref.current);
     return () => observer.disconnect();
   }, []);
+
+  const recruitersLeft = [...topRecruiters, ...topRecruiters];
+  const recruitersRight = [...topRecruiters.slice().reverse(), ...topRecruiters.slice().reverse()];
 
   return (
     <Layout>
@@ -162,28 +165,50 @@ const Placements = () => {
             <p className="text-gold-dark font-semibold text-sm tracking-wider uppercase mb-2">Our Partners</p>
             <h2 className="text-3xl font-heading font-bold text-foreground">Top <span className="text-royal">Recruiters</span></h2>
           </div>
-          <div className="flex flex-wrap justify-center gap-4 max-w-5xl mx-auto">
-            {topRecruiters.map((r, i) => (
+          <div className="space-y-4 max-w-6xl mx-auto">
+            <div className="overflow-hidden">
               <motion.div
-                key={r.name}
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.03 }}
-                className="flex items-center gap-3 px-5 py-3 bg-surface rounded-xl shadow-sm border border-border hover:border-gold hover:shadow-md transition-all min-w-[160px]"
+                className="flex gap-4 w-max"
+                animate={{ x: ["0%", "-50%"] }}
+                transition={{ duration: 32, ease: "linear", repeat: Infinity }}
               >
-                <div
-                  className="w-8 h-8 rounded-lg flex items-center justify-center text-surface font-heading font-bold text-xs shrink-0"
-                  style={{ backgroundColor: r.color }}
-                >
-                  {r.name.charAt(0)}
-                </div>
-                <div>
-                  <span className="text-sm font-semibold text-foreground block leading-tight">{r.name}</span>
-                  <span className="text-[10px] text-muted-foreground">{r.category}</span>
-                </div>
+                {recruitersLeft.map((r, index) => (
+                  <div
+                    key={`${r.name}-left-${index}`}
+                    className="group px-5 py-4 bg-surface rounded-xl shadow-sm border border-border hover:border-gold hover:shadow-md transition-all min-w-[190px] h-[80px] flex items-center justify-center"
+                  >
+                    <img
+                      src={r.logo}
+                      alt={`${r.name} logo`}
+                      className="max-h-10 max-w-[140px] w-auto object-contain transition-all"
+                      loading="lazy"
+                    />
+                  </div>
+                ))}
               </motion.div>
-            ))}
+            </div>
+
+            <div className="overflow-hidden">
+              <motion.div
+                className="flex gap-4 w-max"
+                animate={{ x: ["-50%", "0%"] }}
+                transition={{ duration: 34, ease: "linear", repeat: Infinity }}
+              >
+                {recruitersRight.map((r, index) => (
+                  <div
+                    key={`${r.name}-right-${index}`}
+                    className="group px-5 py-4 bg-surface rounded-xl shadow-sm border border-border hover:border-gold hover:shadow-md transition-all min-w-[190px] h-[80px] flex items-center justify-center"
+                  >
+                    <img
+                      src={r.logo}
+                      alt={`${r.name} logo`}
+                      className="max-h-10 max-w-[140px] w-auto object-contain transition-all"
+                      loading="lazy"
+                    />
+                  </div>
+                ))}
+              </motion.div>
+            </div>
           </div>
         </div>
       </section>

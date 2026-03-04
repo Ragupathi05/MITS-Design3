@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { ChevronLeft, ChevronRight, Quote } from "lucide-react";
+import { ChevronLeft, ChevronRight, Quote, Star } from "lucide-react";
 
 const testimonials = [
   {
@@ -19,6 +19,14 @@ const testimonials = [
     text: "The industry-connected curriculum and guest lectures from top executives gave me a real-world perspective that set me apart in interviews.",
   },
 ];
+
+const getInitials = (name: string) =>
+  name
+    .split(" ")
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0]?.toUpperCase())
+    .join("");
 
 const TestimonialsSection = () => {
   const [current, setCurrent] = useState(0);
@@ -39,19 +47,31 @@ const TestimonialsSection = () => {
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -30 }}
-            className="bg-surface rounded-xl p-8 md:p-12 shadow-md text-center"
+            className="bg-surface rounded-2xl border border-border p-8 md:p-12 shadow-md text-center"
           >
-            <Quote className="w-10 h-10 text-gold/30 mx-auto mb-6" />
-            <p className="text-lg text-foreground leading-relaxed mb-8 italic">
+            <div className="flex items-center justify-center gap-1 mb-6 text-gold">
+              {[0, 1, 2, 3, 4].map((star) => (
+                <Star key={star} className="w-4 h-4 fill-current" />
+              ))}
+            </div>
+            <div className="w-16 h-16 rounded-full bg-gold/10 border border-gold/30 mx-auto mb-5 flex items-center justify-center">
+              <Quote className="w-8 h-8 text-gold/50" />
+            </div>
+            <p className="text-lg md:text-xl text-foreground leading-relaxed mb-8 italic font-medium">
               "{testimonials[current].text}"
             </p>
-            <div>
-              <p className="font-heading font-semibold text-foreground">{testimonials[current].name}</p>
-              <p className="text-sm text-muted-foreground">{testimonials[current].role}</p>
+            <div className="flex flex-col items-center gap-3">
+              <div className="w-12 h-12 rounded-full bg-navy text-gold flex items-center justify-center font-heading font-bold text-sm">
+                {getInitials(testimonials[current].name)}
+              </div>
+              <div>
+                <p className="font-heading font-semibold text-foreground text-lg">{testimonials[current].name}</p>
+                <p className="text-sm text-muted-foreground">{testimonials[current].role}</p>
+              </div>
             </div>
           </motion.div>
 
-          <div className="flex justify-center gap-3 mt-8">
+          <div className="flex items-center justify-center gap-3 mt-8">
             <button
               onClick={() => setCurrent((current - 1 + testimonials.length) % testimonials.length)}
               className="w-10 h-10 rounded-full border border-border flex items-center justify-center hover:bg-navy hover:text-gold transition-all"
@@ -74,6 +94,9 @@ const TestimonialsSection = () => {
               <ChevronRight className="w-4 h-4" />
             </button>
           </div>
+          <p className="text-center text-xs text-muted-foreground mt-3">
+            {current + 1} / {testimonials.length}
+          </p>
         </div>
       </div>
     </section>
